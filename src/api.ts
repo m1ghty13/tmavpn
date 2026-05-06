@@ -12,6 +12,7 @@ async function req<T>(path: string, options?: RequestInit): Promise<T> {
     headers: {
       'Content-Type': 'application/json',
       'X-Telegram-Init-Data': getInitData(),
+      'ngrok-skip-browser-warning': 'true',
       ...options?.headers,
     },
   })
