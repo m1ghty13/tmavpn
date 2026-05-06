@@ -6,12 +6,19 @@ function getInitData(): string {
   return WebApp.initData || ''
 }
 
+function getPartnerId(): string {
+  // Read from ?partner_id= URL param (set by bot when opening WebApp via menu button)
+  const params = new URLSearchParams(window.location.search)
+  return params.get('partner_id') || '0'
+}
+
 async function req<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}/tma${path}`, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
       'X-Telegram-Init-Data': getInitData(),
+      'X-Partner-Id': getPartnerId(),
       'ngrok-skip-browser-warning': 'true',
       ...options?.headers,
     },
